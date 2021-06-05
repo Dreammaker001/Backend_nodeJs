@@ -1,0 +1,2 @@
+jalankan di cmd :
+npm nodemon index.js

@@ -1,3 +1,4 @@
+
 const cors = require('cors')
 
 var express = require('express')
@@ -8,9 +9,10 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors())
-
 // app.use(bodyParser.urlencoded())
 
+var userRouter = require('./Routers/userRouter.js')
+app.use('/user',userRouter)
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -23,7 +25,6 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 });
-
 
 app.get('/', (req,res)=>{
     res.send(`
