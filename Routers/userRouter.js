@@ -13,7 +13,7 @@ var con = mysql.createConnection({
   password: "",
   database: "todo"
 });
-var lastId = [{"id":0}]
+var lastId = 0
 con.query("SELECT MAX(id) AS id FROM user", function (err, result, fields) {
     if (err) throw err;
     // for(var i of result)
@@ -23,15 +23,15 @@ con.query("SELECT MAX(id) AS id FROM user", function (err, result, fields) {
 router.get('/', (req,res)=>{
     con.query("SELECT * FROM user", function (err, result, fields) {
         if (err) throw err;
-        res.send(lastId)
+        res.send(result)
     })
 })
 router.post('/', (req,res)=>{
+        lastId +=1
         var sql = "INSERT INTO user (username,password) VALUES ('"+req.body.username+"', '"+req.body.password+"')";
         con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");
-        lastId +=1
         res.json({id : lastId, username : req.body.username})
     })
 })
